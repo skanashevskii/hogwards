@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class FacultyController {
 
     @GetMapping("{id}")
     @Operation(summary = "Информация о факультете")
-    public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFacultyInfo(@Parameter(description = "ID факультета") @PathVariable long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -51,11 +52,11 @@ public class FacultyController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление факультета")
-    public ResponseEntity<Void> deleteFaculty(@PathVariable Long id) {
-        facultyService.deleteFaculty(id);
-        return ResponseEntity.ok().build();
+    public boolean deleteFaculty(@PathVariable long id) {
+        return facultyService.deleteFaculty(id);
+
     }
-    @GetMapping
+    @GetMapping("byColor")
     @Operation(summary = "Сортировка по цвету")
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
         if (color != null && !color.isBlank()) {
@@ -63,5 +64,10 @@ public class FacultyController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+    //2 й вариант
+ /*   public Collection<Faculty> findFuculties(@RequestParam String color) {
+
+        return facultyService.findByColor(color);
+    }*/
 }
 

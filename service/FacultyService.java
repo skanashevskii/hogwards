@@ -2,36 +2,38 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
-    private final Map<Long, Faculty> facultyHogwards= new HashMap<>();
+    private final Map<Long, Faculty> facultyHogwarts= new HashMap<>();
     private long lastId = 0;
 
     public Faculty createFaculty(Faculty faculty){
         faculty.setId(++lastId);
-        facultyHogwards.put(lastId,faculty);
+        facultyHogwarts.put(lastId,faculty);
         return faculty;
     }
 
     public Faculty findFaculty(long id){
-        return facultyHogwards.get(id);
+        return facultyHogwarts.get(id);
     }
     public Faculty editFaculty(Faculty faculty) {
-        if (!facultyHogwards.containsKey(faculty.getId())) {
+        if (!facultyHogwarts.containsKey(faculty.getId())) {
             return null;
         }
-        facultyHogwards.put(faculty.getId(), faculty);
+        facultyHogwarts.put(faculty.getId(), faculty);
         return faculty;
     }
 
-    public Faculty deleteFaculty(long id) {
-        return facultyHogwards.remove(id);
+    public boolean deleteFaculty(long id) {
+       facultyHogwarts.remove(id);
+       return true;
     }
-    public Collection<Faculty> findByColor(String color) {
+   /* public Collection<Faculty> findByColor(String color) {
         ArrayList<Faculty> result = new ArrayList<>();
         for (Faculty faculty : facultyHogwards.values()) {
             if (Objects.equals(faculty.getColor(), color)) {
@@ -39,5 +41,14 @@ public class FacultyService {
             }
         }
         return result;
+    }*/
+    //2 вариант
+    public Collection<Faculty> findByColor(String color) {
+
+        return facultyHogwarts.values()
+                .stream()
+                .filter(col->col.getColor().equals(color))
+                .collect(Collectors.toList());
+        };
     }
-}
+

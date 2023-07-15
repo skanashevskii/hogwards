@@ -1,10 +1,23 @@
 package ru.hogwarts.school.model;
 
-import java.util.Objects;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
+import java.util.Objects;
+@Schema(description = "Информация о факультете")
 public class Faculty {
+    @Schema(description = "Идентификатор факультета")
+    @Min(1)
     private Long id;
+    @Schema(description = "Наименование факультета")
+    @NotBlank//не пустая строка
+    @Size(min=1,max = 50)
     private String name;
+    @Schema(description = "Цвет факультета")
+    @NotBlank//не пустая строка
     private String color;
 
     public Faculty(Long id, String name, String color) {

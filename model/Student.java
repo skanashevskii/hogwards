@@ -1,10 +1,21 @@
 package ru.hogwarts.school.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
+@Schema(description = "Информация о студенте")
 public class Student {
+    @Schema(description = "Идентификатор студента")
+    @Min(1)
     private Long id;
+    @Schema(description = "Имя студента")
+    @NotBlank//не пустая строка
     private String name;
+    @Schema(description = "Возраст студента")
+    @Min(1)
     private int age;
 
     public Student(Long id, String name, int age) {

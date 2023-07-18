@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class NotAnyStudent extends RuntimeException{
+public class NotAnyStudent extends RuntimeException {
     public NotAnyStudent() {
         super();
     }

@@ -27,7 +27,7 @@ public class FacultyController {
     @GetMapping("{id}")
     @Operation(summary = "Информация о факультете")
     public ResponseEntity<Faculty> getFacultyInfo(@Parameter(description = "ID факультета") @PathVariable long id) {
-        Faculty faculty = facultyService.findFaculty(id);
+        Faculty faculty = facultyService.findFacultyById(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
         }
@@ -52,10 +52,12 @@ public class FacultyController {
 
     @DeleteMapping("{id}")
     @Operation(summary = "Удаление факультета")
-    public boolean deleteFaculty(@PathVariable long id) {
-        return facultyService.deleteFaculty(id);
+    public ResponseEntity<Faculty> deleteFaculty(@PathVariable long id) {
+       facultyService.deleteFaculty(id);
+       return ResponseEntity.ok().build();
 
     }
+
     @GetMapping("byColor")
     @Operation(summary = "Сортировка по цвету")
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
@@ -65,7 +67,7 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
     //2 й вариант
- /*   public Collection<Faculty> findFuculties(@RequestParam String color) {
+ /*   public Collection<Faculty> findFaculties(@RequestParam String color) {
 
         return facultyService.findByColor(color);
     }*/

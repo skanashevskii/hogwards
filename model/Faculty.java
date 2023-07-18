@@ -1,29 +1,41 @@
 package ru.hogwarts.school.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
+
 @Schema(description = "Информация о факультете")
+@Entity
+@Table(name = "faculty")
 public class Faculty {
+
     @Schema(description = "Идентификатор факультета")
     @Min(1)
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+     private Long id;
     @Schema(description = "Наименование факультета")
-    @NotBlank//не пустая строка
-    @Size(min=1,max = 50)
+    @Size(min = 1, max = 50)
+    @Column(name = "name")
     private String name;
     @Schema(description = "Цвет факультета")
     @NotBlank//не пустая строка
+    @Column(name = "color")
     private String color;
 
-    public Faculty(Long id, String name, String color) {
+  /*  public Faculty(Long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
+    }*/
+
+    public Faculty() {
     }
 
     public Long getId() {

@@ -1,15 +1,21 @@
 package ru.hogwarts.school.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
 @Schema(description = "Информация о студенте")
+@Entity
+@Table(name = "student")
 public class Student {
+
     @Schema(description = "Идентификатор студента")
     @Min(1)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Schema(description = "Имя студента")
     @NotBlank//не пустая строка
@@ -18,10 +24,13 @@ public class Student {
     @Min(1)
     private int age;
 
-    public Student(Long id, String name, int age) {
+   /* public Student(Long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
+    }*/
+
+    public Student() {
     }
 
     public Long getId() {
@@ -59,14 +68,5 @@ public class Student {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, age);
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
     }
 }
